@@ -38,25 +38,29 @@ export const usePresale = () => {
     functionName: 'paused',
   })
 
-  const { data: userTokensData, refetch: refetchUserTokens } = useReadContract({
-    address: KTK_TOKEN_ADDRESS,
-    abi: KTK_TOKEN_ABI,
-    functionName: 'balanceOf',
-    args: address ? [address] : undefined,
-    query: {
-      enabled: !!address,
-    },
-  })
+  // User-specific contract calls disabled for now (functions may not exist in current contract)
+  // const { data: userTokensData, refetch: refetchUserTokens } = useReadContract({
+  //   address: KTK_TOKEN_ADDRESS,
+  //   abi: KTK_TOKEN_ABI,
+  //   functionName: 'balanceOf',
+  //   args: address ? [address] : undefined,
+  //   query: {
+  //     enabled: !!address,
+  //   },
+  // })
 
-  const { data: userContributionsData, refetch: refetchUserContributions } = useReadContract({
-    address: PRESALE_CONTRACT_ADDRESS,
-    abi: PRESALE_CONTRACT_ABI,
-    functionName: 'userContributions',
-    args: address ? [address] : undefined,
-    query: {
-      enabled: !!address,
-    },
-  })
+  // const { data: userContributionsData, refetch: refetchUserContributions } = useReadContract({
+  //   address: PRESALE_CONTRACT_ADDRESS,
+  //   abi: PRESALE_CONTRACT_ABI,
+  //   functionName: 'userContributions',
+  //   args: address ? [address] : undefined,
+  //   query: {
+  //     enabled: !!address,
+  //   },
+  // })
+
+  const refetchUserTokens = useCallback(() => {}, [])
+  const refetchUserContributions = useCallback(() => {}, [])
 
   const refetchPresaleStatus = useCallback(() => {
     // This will be implemented by wagmi's automatic refetch
@@ -123,21 +127,18 @@ export const usePresale = () => {
     return () => clearInterval(interval)
   }, [refetchPresaleStatus])
 
-  // Process user data
+  // Process user data - currently showing placeholder data
   useEffect(() => {
-    if (userTokensData !== undefined && userContributionsData !== undefined) {
-      setUserData({
-        tokenBalance: (Number(userTokensData) / 1e18).toString(),
-        contribution: formatEther(userContributionsData as bigint)
-      })
-    } else if (address) {
-      // Set empty data for connected wallet without transactions
+    if (address) {
+      // Set placeholder data for connected wallet
       setUserData({
         tokenBalance: '0',
         contribution: '0'
       })
+    } else {
+      setUserData(null)
     }
-  }, [userTokensData, userContributionsData, address])
+  }, [address])
 
   // Buy tokens function
   const buyTokens = useCallback(async (ethAmount: string): Promise<boolean> => {
