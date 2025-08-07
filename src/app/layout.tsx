@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Kuantum Token || Presale || ICO",
   description: "Join the Kuantum Token presale - Revolutionary blockchain technology with secure tokenomics and community-driven governance.",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
