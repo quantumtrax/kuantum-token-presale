@@ -26,7 +26,9 @@ export const usePresale = () => {
     abi: KTK_TOKEN_ABI,
     functionName: 'balanceOf',
     args: address ? [address] : undefined,
-    enabled: !!address,
+    query: {
+      enabled: !!address,
+    },
   })
 
   // Read user contributions if address exists
@@ -35,14 +37,16 @@ export const usePresale = () => {
     abi: PRESALE_CONTRACT_ABI,
     functionName: 'userContributions',
     args: address ? [address] : undefined,
-    enabled: !!address,
+    query: {
+      enabled: !!address,
+    },
   })
 
   // Process presale data
   useEffect(() => {
     if (presaleStatus && Array.isArray(presaleStatus) && presaleStatus.length === 4) {
       const [raised, goal, price, active] = presaleStatus as [bigint, bigint, bigint, boolean]
-      const progress = goal > 0n ? Number((raised * 100n) / goal) : 0
+      const progress = goal > BigInt(0) ? Number((raised * BigInt(100)) / goal) : 0
       
       setPresaleData({
         totalRaised: formatEther(raised),
@@ -163,11 +167,11 @@ export const usePresale = () => {
       console.error('Error buying tokens:', error)
       
       let errorMessage = 'Transaction failed. Please try again.'
-      if (error.name === 'UserRejectedRequestError') {
+      if (error && typeof error === 'object' && 'name' in error && error.name === 'UserRejectedRequestError') {
         errorMessage = 'Transaction cancelled by user.'
-      } else if (error.message?.includes('insufficient funds')) {
+      } else if (error && typeof error === 'object' && 'message' in error && typeof error.message === 'string' && error.message.includes('insufficient funds')) {
         errorMessage = 'Insufficient ETH balance.'
-      } else if (error.message?.includes('Exceeds max goal')) {
+      } else if (error && typeof error === 'object' && 'message' in error && typeof error.message === 'string' && error.message.includes('Exceeds max goal')) {
         errorMessage = 'Purchase amount exceeds presale goal.'
       }
       

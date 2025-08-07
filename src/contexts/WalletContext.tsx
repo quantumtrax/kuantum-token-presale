@@ -208,10 +208,12 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
         }
       }
 
-      window.ethereum.on('accountsChanged', handleAccountsChanged)
+      window.ethereum.on('accountsChanged', handleAccountsChanged as (...args: unknown[]) => void)
       
       return () => {
-        window.ethereum.removeListener('accountsChanged', handleAccountsChanged)
+        if (typeof window !== 'undefined' && window.ethereum) {
+          window.ethereum.removeListener('accountsChanged', handleAccountsChanged as (...args: unknown[]) => void)
+        }
       }
     }
   }, [isWalletConnected])
