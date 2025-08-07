@@ -121,7 +121,7 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
     if (typeof window !== 'undefined' && window.ethereum) {
       const accounts = await window.ethereum.request({ 
         method: 'eth_requestAccounts' 
-      })
+      }) as string[]
       
       // Switch to BSC Testnet
       await window.ethereum.request({
@@ -151,7 +151,7 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
     if (typeof window !== 'undefined' && window.ethereum) {
       const accounts = await window.ethereum.request({ 
         method: 'eth_requestAccounts' 
-      })
+      }) as string[]
       
       if (accounts.length > 0) {
         setIsWalletConnected(true)
