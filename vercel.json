@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "cd token-presale && npm run build",
+  "devCommand": "cd token-presale && npm run dev",
+  "installCommand": "cd token-presale && npm install",
+  "outputDirectory": "token-presale/.next"
+}

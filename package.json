@@ -1,0 +1,23 @@
+{
+  "name": "kuantum-token-presale",
+  "version": "1.0.0",
+  "description": "Kuantum Token Presale Platform with Web3 Integration",
+  "private": true,
+  "scripts": {
+    "dev": "cd token-presale && npm run dev",
+    "build": "cd token-presale && npm run build",
+    "start": "cd token-presale && npm run start",
+    "lint": "cd token-presale && npm run lint",
+    "vercel-build": "cd token-presale && npm install && npm run build"
+  },
+  "keywords": [
+    "cryptocurrency",
+    "presale",
+    "web3",
+    "nextjs",
+    "blockchain",
+    "kuantum"
+  ],
+  "author": "QuantumTrax",
+  "license": "MIT"
+}
