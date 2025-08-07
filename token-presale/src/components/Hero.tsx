@@ -6,12 +6,12 @@ import { useState, useEffect } from 'react'
 declare global {
   interface Window {
     ethereum?: {
-      request: (args: { method: string; params?: any[] }) => Promise<any>
+      request: (args: { method: string; params?: unknown[] }) => Promise<unknown>
     }
   }
 }
 import { motion } from 'framer-motion'
-import { Play, Sparkles, Wallet, Clock, Copy, Plus } from 'lucide-react'
+import { Sparkles, Wallet, Clock, Copy, Plus } from 'lucide-react'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useNotification } from '@/contexts/NotificationContext'
 import { usePresale } from '@/hooks/usePresale'
@@ -93,16 +93,18 @@ export default function Hero() {
       if (typeof window.ethereum !== 'undefined') {
         const wasAdded = await window.ethereum.request({
           method: 'wallet_watchAsset',
-          params: {
-            type: 'ERC20',
-            options: {
-              address: KTK_TOKEN_ADDRESS,
-              symbol: 'KTK',
-              decimals: 18,
-              image: '/favicon.ico', // Use your favicon as token image
+          params: [
+            {
+              type: 'ERC20',
+              options: {
+                address: KTK_TOKEN_ADDRESS,
+                symbol: 'KTK',
+                decimals: 18,
+                image: '/favicon.ico', // Use your favicon as token image
+              },
             },
-          },
-        })
+          ],
+        }) as boolean
 
         if (wasAdded) {
           showNotification({
