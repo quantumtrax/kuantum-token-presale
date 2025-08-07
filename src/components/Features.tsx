@@ -1,10 +1,17 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ReactNode } from 'react'
+
+interface BackgroundTypewriterProps {
+  text: string
+  children: ReactNode
+  delay?: number
+  startDelay?: number
+}
 
 // Background Typewriter Effect Component
-function BackgroundTypewriter({ text, children, delay = 1, startDelay = 0 }) {
+function BackgroundTypewriter({ text, children, delay = 1, startDelay = 0 }: BackgroundTypewriterProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
   const [isComplete, setIsComplete] = useState(false)
