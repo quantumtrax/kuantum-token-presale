@@ -2,7 +2,6 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 interface WalletOption {
   name: string

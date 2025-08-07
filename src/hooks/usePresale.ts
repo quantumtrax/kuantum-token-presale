@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
-import { useAccount, usePublicClient, useWalletClient, useWriteContract, useReadContract } from 'wagmi'
-import { PRESALE_CONTRACT_ADDRESS, PRESALE_CONTRACT_ABI, KTK_TOKEN_ADDRESS, KTK_TOKEN_ABI, PresaleData, UserData, formatEther, parseEther, calculateTokens } from '@/utils/contract'
+import { useAccount, usePublicClient, useWriteContract, useReadContract } from 'wagmi'
+import { PRESALE_CONTRACT_ADDRESS, PRESALE_CONTRACT_ABI, KTK_TOKEN_ADDRESS, KTK_TOKEN_ABI, PresaleData, UserData, formatEther, parseEther } from '@/utils/contract'
 import { useNotification } from '@/contexts/NotificationContext'
 
 export const usePresale = () => {
@@ -159,7 +159,7 @@ export const usePresale = () => {
       }
       
       return false
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error buying tokens:', error)
       
       let errorMessage = 'Transaction failed. Please try again.'

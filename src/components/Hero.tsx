@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Play, Sparkles, Wallet, Clock, Copy } from 'lucide-react'
+import { Play, Sparkles, Wallet, Clock, Copy } from 'lucide-react'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useNotification } from '@/contexts/NotificationContext'
 import { usePresale } from '@/hooks/usePresale'
@@ -11,7 +11,7 @@ import { calculateTokens } from '@/utils/contract'
 export default function Hero() {
   const [amount, setAmount] = useState('')
   const { showNotification } = useNotification()
-  const { presaleData, userData, isLoading, buyTokens, isConnected } = usePresale()
+  const { presaleData, userData, buyTokens } = usePresale()
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -304,8 +304,6 @@ export default function Hero() {
                     {({
                       account,
                       chain,
-                      openAccountModal,
-                      openChainModal,
                       openConnectModal,
                       authenticationStatus,
                       mounted,
