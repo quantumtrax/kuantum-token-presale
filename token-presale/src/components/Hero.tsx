@@ -2,14 +2,7 @@
 
 import { useState, useEffect } from 'react'
 
-// Extend the Window interface to include ethereum
-declare global {
-  interface Window {
-    ethereum?: {
-      request: (args: { method: string; params?: unknown[] }) => Promise<unknown>
-    }
-  }
-}
+// Use existing ethereum interface from wagmi/rainbowkit
 import { motion } from 'framer-motion'
 import { Sparkles, Wallet, Clock, Copy, Plus } from 'lucide-react'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
@@ -90,8 +83,8 @@ export default function Hero() {
 
     try {
       // Check if MetaMask is available
-      if (typeof window.ethereum !== 'undefined') {
-        const wasAdded = await window.ethereum.request({
+      if (typeof window !== 'undefined' && window.ethereum?.request) {
+        const result = await window.ethereum.request({
           method: 'wallet_watchAsset',
           params: [
             {
@@ -104,9 +97,10 @@ export default function Hero() {
               },
             },
           ],
-        }) as boolean
+        })
 
-        if (wasAdded) {
+        // Handle the result - it should be true if successful
+        if (result) {
           showNotification({
             type: 'success',
             title: 'Token Added!',
