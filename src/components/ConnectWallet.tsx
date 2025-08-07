@@ -70,7 +70,7 @@ export default function ConnectWallet() {
   const checkConnection = async () => {
     if (typeof window !== 'undefined' && window.ethereum) {
       try {
-        const accounts = await window.ethereum.request({ method: 'eth_accounts' })
+        const accounts = await window.ethereum.request({ method: 'eth_accounts' }) as string[]
         if (accounts.length > 0) {
           setIsConnected(true)
           setAddress(accounts[0])
@@ -109,7 +109,7 @@ export default function ConnectWallet() {
     if (typeof window !== 'undefined' && window.ethereum) {
       const accounts = await window.ethereum.request({ 
         method: 'eth_requestAccounts' 
-      })
+      }) as string[]
       
       // Switch to BSC Testnet
       await window.ethereum.request({
@@ -140,7 +140,7 @@ export default function ConnectWallet() {
     if (typeof window !== 'undefined' && window.ethereum) {
       const accounts = await window.ethereum.request({ 
         method: 'eth_requestAccounts' 
-      })
+      }) as string[]
       
       if (accounts.length > 0) {
         setIsConnected(true)
